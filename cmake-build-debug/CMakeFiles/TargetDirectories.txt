@@ -1,0 +1,3 @@
+/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles/SpotTheDifference.dir
+/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles/rebuild_cache.dir

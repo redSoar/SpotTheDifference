@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/SpotTheDifference.dir/main.cpp.o -o SpotTheDifference 
