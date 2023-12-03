@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference
+CMAKE_SOURCE_DIR = /mnt/c/Users/ninte/CLionProjects/SpotTheDifference
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug
+CMAKE_BINARY_DIR = /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,6 +129,54 @@ SpotTheDifference/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/build
 .PHONY : SpotTheDifference/fast
 
+lib/src/imageClass.o: lib/src/imageClass.cpp.o
+.PHONY : lib/src/imageClass.o
+
+# target to build an object file
+lib/src/imageClass.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o
+.PHONY : lib/src/imageClass.cpp.o
+
+lib/src/imageClass.i: lib/src/imageClass.cpp.i
+.PHONY : lib/src/imageClass.i
+
+# target to preprocess a source file
+lib/src/imageClass.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.i
+.PHONY : lib/src/imageClass.cpp.i
+
+lib/src/imageClass.s: lib/src/imageClass.cpp.s
+.PHONY : lib/src/imageClass.s
+
+# target to generate assembly for a file
+lib/src/imageClass.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.s
+.PHONY : lib/src/imageClass.cpp.s
+
+lib/src/pixelClass.o: lib/src/pixelClass.cpp.o
+.PHONY : lib/src/pixelClass.o
+
+# target to build an object file
+lib/src/pixelClass.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o
+.PHONY : lib/src/pixelClass.cpp.o
+
+lib/src/pixelClass.i: lib/src/pixelClass.cpp.i
+.PHONY : lib/src/pixelClass.i
+
+# target to preprocess a source file
+lib/src/pixelClass.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.i
+.PHONY : lib/src/pixelClass.cpp.i
+
+lib/src/pixelClass.s: lib/src/pixelClass.cpp.s
+.PHONY : lib/src/pixelClass.s
+
+# target to generate assembly for a file
+lib/src/pixelClass.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.s
+.PHONY : lib/src/pixelClass.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -162,6 +210,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SpotTheDifference"
+	@echo "... lib/src/imageClass.o"
+	@echo "... lib/src/imageClass.i"
+	@echo "... lib/src/imageClass.s"
+	@echo "... lib/src/pixelClass.o"
+	@echo "... lib/src/pixelClass.i"
+	@echo "... lib/src/pixelClass.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

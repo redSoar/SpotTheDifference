@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/lib/cimg
 
-CXX_FLAGS = -g
+CXX_FLAGS = -g -Dcimg_display=1 -Dcimg_use_png -Dcimg_use_jpeg
 

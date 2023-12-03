@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o"
+  "CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o.d"
+  "CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o"
+  "CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o.d"
   "CMakeFiles/SpotTheDifference.dir/main.cpp.o"
   "CMakeFiles/SpotTheDifference.dir/main.cpp.o.d"
   "SpotTheDifference"
