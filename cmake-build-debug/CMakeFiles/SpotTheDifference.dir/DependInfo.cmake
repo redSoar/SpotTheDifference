@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/main.cpp" "CMakeFiles/SpotTheDifference.dir/main.cpp.o" "gcc" "CMakeFiles/SpotTheDifference.dir/main.cpp.o.d"
+  "/mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/main.cpp" "CMakeFiles/SpotTheDifference.dir/main.cpp.o" "gcc" "CMakeFiles/SpotTheDifference.dir/main.cpp.o.d"
   )
 
 # Targets to which this target links.
