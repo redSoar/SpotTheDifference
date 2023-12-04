@@ -3,8 +3,14 @@ project(SpotTheDifference)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# find SDL libraries
+find_package(SDL2 REQUIRED)
+find_package(SDL_image REQUIRED)
+find_package(SDL_ttf REQUIRED)
+
 # Add the path to the CIMG library header
 include_directories(lib/cimg)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL_IMAGE_INCLUDE_DIRS} ${SDL_TTF_INCLUDE_DIRS})
 
 add_executable(SpotTheDifference main.cpp
         lib/src/imageClass.cpp
@@ -14,6 +20,7 @@ add_executable(SpotTheDifference main.cpp
 target_link_libraries(SpotTheDifference m pthread X11)
 target_link_libraries(SpotTheDifference m pthread X11 png)
 target_link_libraries(SpotTheDifference m pthread X11 jpeg)
+target_link_libraries(SpotTheDifference ${SDL2_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${SDL_TTF_LIBRARIES})
 
 
 
