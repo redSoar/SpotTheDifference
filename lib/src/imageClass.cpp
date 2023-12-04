@@ -252,6 +252,7 @@ void Image::flipImageHorizontally() {
     deconstructArray(tempArray);
 }
 
+//new function
 void Image::changeColorValue(mt19937 &randomNumberGenerator) {
     std::uniform_int_distribution<> colorValue(0, 255);
     std::uniform_int_distribution<> RGB(0, 2);

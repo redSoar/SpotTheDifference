@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference
+CMAKE_SOURCE_DIR = /mnt/c/Users/ninte/CLionProjects/SpotTheDifference
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug
+CMAKE_BINARY_DIR = /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SpotTheDifference.dir/depend.make
@@ -72,44 +72,44 @@ include CMakeFiles/SpotTheDifference.dir/flags.make
 CMakeFiles/SpotTheDifference.dir/main.cpp.o: CMakeFiles/SpotTheDifference.dir/flags.make
 CMakeFiles/SpotTheDifference.dir/main.cpp.o: ../main.cpp
 CMakeFiles/SpotTheDifference.dir/main.cpp.o: CMakeFiles/SpotTheDifference.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SpotTheDifference.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SpotTheDifference.dir/main.cpp.o -MF CMakeFiles/SpotTheDifference.dir/main.cpp.o.d -o CMakeFiles/SpotTheDifference.dir/main.cpp.o -c /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SpotTheDifference.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SpotTheDifference.dir/main.cpp.o -MF CMakeFiles/SpotTheDifference.dir/main.cpp.o.d -o CMakeFiles/SpotTheDifference.dir/main.cpp.o -c /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/main.cpp
 
 CMakeFiles/SpotTheDifference.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SpotTheDifference.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/main.cpp > CMakeFiles/SpotTheDifference.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/main.cpp > CMakeFiles/SpotTheDifference.dir/main.cpp.i
 
 CMakeFiles/SpotTheDifference.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SpotTheDifference.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/main.cpp -o CMakeFiles/SpotTheDifference.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/main.cpp -o CMakeFiles/SpotTheDifference.dir/main.cpp.s
 
 CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o: CMakeFiles/SpotTheDifference.dir/flags.make
 CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o: ../lib/src/imageClass.cpp
 CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o: CMakeFiles/SpotTheDifference.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o -MF CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o.d -o CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o -c /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/lib/src/imageClass.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o -MF CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o.d -o CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o -c /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/lib/src/imageClass.cpp
 
 CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/lib/src/imageClass.cpp > CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/lib/src/imageClass.cpp > CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.i
 
 CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/lib/src/imageClass.cpp -o CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/lib/src/imageClass.cpp -o CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.s
 
 CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o: CMakeFiles/SpotTheDifference.dir/flags.make
 CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o: ../lib/src/pixelClass.cpp
 CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o: CMakeFiles/SpotTheDifference.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o -MF CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o.d -o CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o -c /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/lib/src/pixelClass.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o -MF CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o.d -o CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o -c /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/lib/src/pixelClass.cpp
 
 CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/lib/src/pixelClass.cpp > CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/lib/src/pixelClass.cpp > CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.i
 
 CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/lib/src/pixelClass.cpp -o CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/lib/src/pixelClass.cpp -o CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.s
 
 # Object files for target SpotTheDifference
 SpotTheDifference_OBJECTS = \
@@ -129,7 +129,7 @@ SpotTheDifference: /usr/lib/x86_64-linux-gnu/libSDL_ttf.so
 SpotTheDifference: /usr/lib/x86_64-linux-gnu/libSDL_image.so
 SpotTheDifference: /usr/lib/x86_64-linux-gnu/libSDL_ttf.so
 SpotTheDifference: CMakeFiles/SpotTheDifference.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable SpotTheDifference"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable SpotTheDifference"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SpotTheDifference.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -141,6 +141,6 @@ CMakeFiles/SpotTheDifference.dir/clean:
 .PHONY : CMakeFiles/SpotTheDifference.dir/clean
 
 CMakeFiles/SpotTheDifference.dir/depend:
-	cd /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles/SpotTheDifference.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/ninte/CLionProjects/SpotTheDifference /mnt/c/Users/ninte/CLionProjects/SpotTheDifference /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles/SpotTheDifference.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SpotTheDifference.dir/depend
 

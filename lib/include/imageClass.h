@@ -40,6 +40,7 @@ public:
 
     void fillPixelArray();
 
+    //pa03 stuff added
     void resizeImage(int resizeX, int resizeY, int startX, int startY);
     void cropImage(int resizeX, int resizeY, int startX, int startY);
     void replace(int xCoord, int yCoord, const Image& mosaicSectionSample);

@@ -8,7 +8,7 @@
 using namespace std;
 
 void randomEffectToOccur(Image& sectionImage, mt19937& randomNumberGenerator);
-
+//pa03 stuff added
 int main() {
     std::random_device rd;
     std::mt19937 randomNumberGenerator(rd());
