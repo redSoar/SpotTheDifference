@@ -12,6 +12,9 @@ Image::Image(const char* filename) {
         std::cout << "I'm reading: " << inputFileName << std::endl;
         size = x * y * n;
         this->pixelArray = nullptr;
+        this->inputFileName = filename;
+        makePixelArray();
+        fillPixelArray();
     }
     else {
         //error
@@ -29,6 +32,26 @@ Image::Image(const Image &copyImage) : Image(copyImage.x, copyImage.y, copyImage
     this->size = copyImage.size;
     this->data = copyImage.data;
     this->pixelArray = copyImage.pixelArray;
+    makePixelArray();
+    for (int i = 0; i < y; i++) {
+        for (int j = 0; j < x; j++) {
+            this->pixelArray[i][j] = copyImage.pixelArray[i][j];
+        }
+    }
+}
+
+Image& Image::operator=(const Image & arg) {
+    if (this != &arg) {
+        this->size = arg.size;
+        this->data = CImg<unsigned char> (x, y, 1, n);
+        makePixelArray();
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                this->pixelArray[i][j] = arg.pixelArray[i][j];
+            }
+        }
+    }
+    return *this;
 }
 
 
@@ -83,8 +106,13 @@ void Image::fillPixelArray() {
 
 bool Image::read(const char *filename) {
     data.load(filename);
-    x = data.width();
-    y = data.height();
+    if (data.width() % 3 == 0 && data.height() % 3 == 0) {
+        x = data.width();
+        y = data.height();
+    } else {
+        x = data.width() - data.width() % 3;
+        y = data.height() - data.height() % 3;
+    }
     n = data.spectrum();
     this->inputFileName = filename;
     return !data.is_empty();
@@ -120,11 +148,72 @@ unsigned char *Image::convert2Dto1D(Pixel **pixelArray) {
     return data;
 }
 
+void Image::resizeImage(int resizeX, int resizeY, int startX, int startY) {
+    int newX = resizeX;
+    int newY = resizeY;
+    cropImage(newX, newY, startX, startY);
+    data.resize(resizeX, resizeY, 1, n);
+    y = newY;
+    x = newX;
+    size = y * x * n;
+}
+
+void Image::cropImage(int resizeX, int resizeY, int startX, int startY) {
+    if (resizeX > x || resizeY > y) {
+        cout << "Cannot crop to a size larger than the original image." << endl;
+        return;
+    }
+    Pixel** tempArray;
+    tempArray = makeTempArray(tempArray,resizeY, resizeX);
+    if (x != resizeX || y != resizeY) {
+        for (int i = 0; i < resizeY; i++) {
+            for (int j = 0; j < resizeX; j++) {
+                tempArray[i][j].setRed(pixelArray[i + startY][j + startX].getRed());
+                tempArray[i][j].setGreen(pixelArray[i + startY][j + startX].getGreen());
+                tempArray[i][j].setBlue(pixelArray[i + startY][j + startX].getBlue());
+                tempArray[i][j].setAlpha(pixelArray[i + startY][j + startX].getAlpha());
+            }
+        }
+    }
+    x = resizeX;
+    y = resizeY;
+    pixelArray = copyPixelArray(tempArray, y, x);
+    deconstructArray(tempArray);
+}
+
+void Image::replace(int xCoord, int yCoord, const Image& mosaicSectionSample) {
+    for (int i = yCoord; i < yCoord + mosaicSectionSample.y; i++) {
+        for (int j = xCoord; j < xCoord + mosaicSectionSample.x; j++) {
+            pixelArray[i][j].setRed(mosaicSectionSample.pixelArray[i - yCoord][j - xCoord].getRed());
+            pixelArray[i][j].setGreen(mosaicSectionSample.pixelArray[i - yCoord][j - xCoord].getGreen());
+            pixelArray[i][j].setBlue(mosaicSectionSample.pixelArray[i - yCoord][j - xCoord].getBlue());
+        }
+    }
+}
+
 void Image::write(const char *filename) {
     outputFileName = filename;
     this->data = CImg<unsigned char>(convert2Dto1D(pixelArray), x, y, 1, n);
     std::cout << "I'm writing to: " << outputFileName << std::endl;
     data.save(filename);
+}
+
+void Image::combine(Image& sampleImage, vector<Image>& sectionImages) {
+    int sectionNumber = 0;
+    while (!(sectionNumber >= 9)) {
+        for (int j = 0; j < y; j += sectionImages[sectionNumber].y) {
+            if (sectionNumber >= 9) {
+                break;
+            }
+            for (int k = 0; k < x; k += sectionImages[sectionNumber].x) {
+                if (sectionNumber >= 9) {
+                    break;
+                }
+                sampleImage.replace(k, j, sectionImages[sectionNumber]);
+                sectionNumber++;
+            }
+        }
+    }
 }
 
 void Image::flipImageVertically() {
@@ -163,45 +252,41 @@ void Image::flipImageHorizontally() {
     deconstructArray(tempArray);
 }
 
-void Image::rotate90Right() {
-    Pixel** tempArray;
-    int temp = y;
-    y = x;
-    x = temp;
-    tempArray = makeTempArray(tempArray,y, x);
-    int rotatedCols = 0;
-    for (int i = 0; i < y; i++) {
-        int rotatedRows = x - 1;
-        for (int j = 0; j < x; j++) {
-            tempArray[i][j].setRed(pixelArray[rotatedRows][rotatedCols].getRed());
-            tempArray[i][j].setGreen(pixelArray[rotatedRows][rotatedCols].getGreen());
-            tempArray[i][j].setBlue(pixelArray[rotatedRows][rotatedCols].getBlue());
-            tempArray[i][j].setAlpha(pixelArray[rotatedRows][rotatedCols].getAlpha());
-            rotatedRows--;
-        }
-        rotatedCols++;
+void Image::changeColorValue(mt19937 &randomNumberGenerator) {
+    std::uniform_int_distribution<> colorValue(0, 255);
+    std::uniform_int_distribution<> RGB(0, 2);
+    int redValue = 0;
+    int greenValue = 0;
+    int blueValue = 0;
+    int colorType = RGB(randomNumberGenerator);
+    if (colorType == 0) {
+        redValue = colorValue(randomNumberGenerator);
+    } else if (colorType == 1) {
+        greenValue = colorValue(randomNumberGenerator);
+    } else {
+        blueValue = colorValue(randomNumberGenerator);
     }
-    pixelArray = copyPixelArray(tempArray, y, x);
-    deconstructArray(tempArray);
-}
-
-void Image::rotate90Left() {
     Pixel** tempArray;
-    int temp = y;
-    y = x;
-    x = temp;
     tempArray = makeTempArray(tempArray,y, x);
-    int rotatedCols = y - 1;
     for (int i = 0; i < y; i++) {
-        int rotatedRows = 0;
         for (int j = 0; j < x; j++) {
-            tempArray[i][j].setRed(pixelArray[rotatedRows][rotatedCols].getRed());
-            tempArray[i][j].setGreen(pixelArray[rotatedRows][rotatedCols].getGreen());
-            tempArray[i][j].setBlue(pixelArray[rotatedRows][rotatedCols].getBlue());
-            tempArray[i][j].setAlpha(pixelArray[rotatedRows][rotatedCols].getAlpha());
-            rotatedRows++;
+            if (redValue == 0) {
+                tempArray[i][j].setRed(pixelArray[i][j].getRed());
+            } else {
+                tempArray[i][j].setRed(redValue);
+            }
+            if (greenValue == 0) {
+                tempArray[i][j].setGreen(pixelArray[i][j].getGreen());
+            } else {
+                tempArray[i][j].setGreen(greenValue);
+            }
+            if (blueValue == 0) {
+                tempArray[i][j].setBlue(pixelArray[i][j].getBlue());
+            } else {
+                tempArray[i][j].setBlue(blueValue);
+            }
+            tempArray[i][j].setAlpha(pixelArray[i][j].getAlpha());
         }
-        rotatedCols--;
     }
     pixelArray = copyPixelArray(tempArray, y, x);
     deconstructArray(tempArray);
@@ -213,8 +298,6 @@ void Image::makeBorder(int thickness, Pixel borderColor) {
         thickness *= - 1;
     }
     Pixel** tempArray;
-    this->y += (thickness * 2);
-    this->x += (thickness * 2);
     tempArray = makeTempArray(tempArray,y, x);
     for (int i = 0; i < y; i++) {
         for (int j = 0; j < x; j++) {
@@ -321,4 +404,20 @@ void Image::deconstructArray(Pixel **array) {
         delete[] array[i];
     }
     delete[] array;
+}
+
+int Image::getXSectionSize(int numberOfSections) {
+    if (x % numberOfSections != 0) {
+        return x - x % numberOfSections / numberOfSections;
+    } else {
+        return x / numberOfSections;
+    }
+}
+
+int Image::getYSectionSize(int numberOfSections) {
+    if (y % numberOfSections != 0) {
+        return y - y % numberOfSections / numberOfSections;
+    } else {
+        return y / numberOfSections;
+    }
 }

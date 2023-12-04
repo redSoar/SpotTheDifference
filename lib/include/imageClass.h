@@ -2,6 +2,7 @@
 // Created by ninte on 12/3/2023.
 //
 #include <iostream>
+#include <random>
 
 
 #ifndef SPOTTHEDIFFERENCE_IMAGECLASS_H
@@ -32,11 +33,17 @@ public:
     explicit Image(const char* filename);
     Image(int x, int y, int n);
     Image(const Image& img);
+    Image& operator=(const Image & arg);
     ~Image();
 
     void makePixelArray();
 
     void fillPixelArray();
+
+    void resizeImage(int resizeX, int resizeY, int startX, int startY);
+    void cropImage(int resizeX, int resizeY, int startX, int startY);
+    void replace(int xCoord, int yCoord, const Image& mosaicSectionSample);
+    void combine(Image& sampleImage, std::vector<Image>& sectionImages);
 
     unsigned char* convert2Dto1D(Pixel** pixelArray);
 
@@ -44,13 +51,15 @@ public:
 
     void flipImageVertically();
     void flipImageHorizontally();
-    void rotate90Right();
-    void rotate90Left();
+    void changeColorValue(std::mt19937& randomNumberGenerator);
     void makeBorder(int thickness, Pixel borderColor);
     Pixel addBorderPixel(Pixel pixel, Pixel borderColor);
     void createPointillism();
     int makeMinRadius(int x, int y);
     int makeMaxRadius(int x, int y);
+
+    int getXSectionSize(int numberOfSections);
+    int getYSectionSize(int numberOfSections);
 
     void deconstructArray(Pixel** array);
 
