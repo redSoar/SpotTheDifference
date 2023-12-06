@@ -37,7 +37,7 @@ int main() {
 //    random_device rd;
 //    mt19937 randomNumberGenerator(rd());
 
-    vector<string> imageList {};
+    vector<const char*> imageList {};
 
     fs::path imageLocation("../images");
     if (!fs::exists(imageLocation)) {
@@ -48,7 +48,7 @@ int main() {
     }
 
     for (const fs::directory_entry& entry: fs::directory_iterator(imageLocation)) {
-        string filePath = entry.path().string();
+        const char* filePath = entry.path().c_str();
 
         if (entry.is_regular_file()) {
            imageList.push_back(filePath);

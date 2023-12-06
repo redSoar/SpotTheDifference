@@ -13,8 +13,8 @@ using namespace std;
 
 class GameController {
 private:
-    vector<string> listOfImages;
-    vector<string> usedImages {};
+    vector<const char*> listOfImages;
+    vector<const char*> usedImages {};
     int width {};
     int height {};
     SDL_Window *window {};
@@ -25,7 +25,7 @@ private:
     SDL_Texture *imageTexture {};
     SDL_Event event {};
 public:
-    explicit GameController(vector<string>& newList);
+    explicit GameController(vector<const char*>& newList);
     bool isButtonClicked(SDL_Event& curEvent, SDL_Rect& curButton);
     void process(int flag);
     void run();

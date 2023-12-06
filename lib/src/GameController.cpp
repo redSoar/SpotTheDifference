@@ -6,7 +6,7 @@
 #include <random>
 #include "../include/GameController.h"
 
-GameController::GameController(vector<std::string> &newList) {
+GameController::GameController(vector<const char*> &newList) {
     listOfImages = newList;
     currentStage = GameStage::MainMenu;
 }
@@ -65,6 +65,43 @@ void GameController::process(int flag) {
 
         std::random_device rd;
         std::mt19937 ranNumGen(rd());
+        std::uniform_int_distribution<> imageRange(0, (int) listOfImages.size() - 1);
+
+        while(true) {
+            bool isCopyFound = false;
+            int img = imageRange(ranNumGen);
+            const char* curImage = listOfImages[img];
+            for (int i = 0; i < usedImages.size(); i++) {
+                if (curImage == usedImages[i]) {
+                    isCopyFound = true;
+                }
+            }
+            if (!isCopyFound) {
+                imageSurface = SDL_LoadBMP(curImage);
+                if (imageSurface == nullptr) {
+                    std::cout << "SDL could not load image: " << SDL_GetError() << std::endl;
+                }
+                usedImages.push_back(curImage);
+                break;
+            }
+        }
+
+        imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+        SDL_FreeSurface(imageSurface);
+
+        // put code here for reading image and changing width and height of window
+
+        window = SDL_CreateWindow("Spot the Difference",
+                                  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                  width, height, SDL_WINDOW_ALLOW_HIGHDPI);
+        if (window == nullptr) {
+            std::cerr << "Could not create window: " << SDL_GetError() << std::endl;
+        }
+
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        if (renderer == nullptr) {
+            std::cerr << "Could not create renderer: " << SDL_GetError() << std::endl;
+        }
     }
 }
 
@@ -72,16 +109,6 @@ void GameController::run() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "SDL could not initialize! SDL Error: " << SDL_GetError() << std::endl;
     }
-
-//    Scene currentScene = Scene::MainMenu;
-
-    SDL_Surface *imageSurface = SDL_LoadBMP("../images/SwifferCircle.bmp");
-    if (imageSurface == nullptr) {
-        std::cout << "SDL could not load image: " << SDL_GetError() << std::endl;
-    }
-
-    SDL_Texture *imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
-    SDL_FreeSurface(imageSurface);
 
     while (true) {
         if (SDL_PollEvent(&event)) {
@@ -91,11 +118,15 @@ void GameController::run() {
 
             if (SDL_MOUSEBUTTONDOWN == event.type) {
                 if (currentStage == GameStage::MainMenu && isButtonClicked(event, buttonRect)) {
-                    currentStage = GameStage::Instructions;
+                    process(1);
+                    currentStage = GameStage::Stage1;
+//                    currentStage = GameStage::Instructions;
                 } else if (currentStage == GameStage::Instructions && isButtonClicked(event, buttonRect)) {
+                    process(1);
                     currentStage = GameStage::Stage1;
                 } else if (currentStage == GameStage::Stage1) {
                     if (isButtonClicked(event, buttonRect)) {
+                        process(1);
                         currentStage = GameStage::Stage2;
                     } else {
                         process(-1);
@@ -103,6 +134,7 @@ void GameController::run() {
                     }
                 } else if (currentStage == GameStage::Stage2) {
                     if (isButtonClicked(event, buttonRect)) {
+                        process(1);
                         currentStage = GameStage::Stage3;
                     } else {
                         process(-1);
