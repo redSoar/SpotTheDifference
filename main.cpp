@@ -10,26 +10,6 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-/*
- * Preprocessing (main.cpp):
- *  - All images should be .bmp BEFORE running program
- *  - Create random number generator
- *  - Create list of strings with all image paths
- *  - Create controller and pass in RNG and list of paths
- *  - Call process() function
- *    - Create window, renderer, etc..
- *  - Call run() function
- * Controller (run() function):
- *  - Pick a random image, and set width and height
- *  - Run game loop
- *    - Display image and invisible button
- *    - Change screen based on user action
- *      - Wrong, change to lose screen
- *      - Right, change to next screen
- *  - Print to the console (Print class?)
- *  - Calls enum class
- */
-
 int main() {
     vector<string> imageList {};
 

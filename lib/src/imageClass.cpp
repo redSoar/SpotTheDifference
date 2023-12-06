@@ -9,7 +9,6 @@ using namespace std;
 Image::Image(const char* filename) {
     if(read(filename)) {
         //works
-        std::cout << "I'm reading: " << inputFileName << std::endl;
         size = x * y * n;
         this->pixelArray = nullptr;
         this->inputFileName = filename;
@@ -194,7 +193,6 @@ void Image::replace(int xCoord, int yCoord, const Image& mosaicSectionSample) {
 void Image::write(const char *filename) {
     outputFileName = filename;
     this->data = CImg<unsigned char>(convert2Dto1D(pixelArray), x, y, 1, n);
-    std::cout << "I'm writing to: " << outputFileName << std::endl;
     data.save(filename);
 }
 

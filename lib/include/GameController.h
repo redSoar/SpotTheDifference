@@ -20,6 +20,7 @@ private:
     SDL_Window *window {};
     SDL_Renderer *renderer {};
     SDL_Rect buttonRect {};
+    SDL_Rect imageButton {};
     GameStage currentStage {};
     SDL_Surface *imageSurface {};
     SDL_Texture *imageTexture {};
@@ -27,7 +28,7 @@ private:
 public:
     explicit GameController(vector<string>& newList);
     void randomEffectToOccur(Image& sectionImage, mt19937& randomNumberGenerator);
-    void processImage(const string& fileName);
+    pair<int, int> processImage(const string& fileName);
     bool isButtonClicked(SDL_Event& curEvent, SDL_Rect& curButton);
     void process(int flag);
     void run();

@@ -25,7 +25,7 @@ void GameController::randomEffectToOccur(Image& sectionImage, mt19937& randomNum
         sectionImage.changeColorValue(randomNumberGenerator);
     }
     else if (editType == 3) {
-        std::uniform_int_distribution<> thicknessValue(0, 100);
+        std::uniform_int_distribution<> thicknessValue(1, 5);
         std::uniform_int_distribution<> colorValue(0, 255);
         int thickness = thicknessValue(randomNumberGenerator);
         int redValue = colorValue(randomNumberGenerator);
@@ -42,7 +42,7 @@ void GameController::randomEffectToOccur(Image& sectionImage, mt19937& randomNum
     }
 }
 
-void GameController::processImage(const string& fileName) {
+pair<int, int> GameController::processImage(const string& fileName) {
     random_device rd;
     mt19937 randomNumberGenerator(rd());
 
@@ -57,11 +57,19 @@ void GameController::processImage(const string& fileName) {
     }
     std::uniform_int_distribution<> section(0, 8);
     int sectionNumber = section(randomNumberGenerator);
+    int startX = test.getXSectionSize(3) * (sectionNumber % 3);
+    int startY = test.getYSectionSize(3) * (sectionNumber / 3);
+    int xSize = test.getXSectionSize(3);
+    int ySize = test.getYSectionSize(3);
+
+    imageButton = {startX, startY, xSize, ySize};
     randomEffectToOccur(sampleSections[sectionNumber], randomNumberGenerator);
     test.makePixelArray();
     test.fillPixelArray();
     test.combine(test, sampleSections);
     test.write("../imageChanged/currentImage.bmp");
+    pair<int, int> newDimensions {test.getXSectionSize(1), test.getYSectionSize(1)};
+    return newDimensions;
 }
 
 bool GameController::isButtonClicked(SDL_Event &curEvent, SDL_Rect &curButton) {
@@ -90,7 +98,7 @@ void GameController::process(int flag) {
             std::cerr << "Could not create renderer: " << SDL_GetError() << std::endl;
         }
 
-        buttonRect = {100, 100, 350, 250};
+        buttonRect = {350, 250, 100, 100};
     } else if (flag == -1) {
         SDL_DestroyTexture(imageTexture);
         SDL_DestroyRenderer(renderer);
@@ -119,6 +127,9 @@ void GameController::process(int flag) {
         std::mt19937 ranNumGen(rd());
         std::uniform_int_distribution<> imageRange(0, (int) listOfImages.size() - 1);
 
+        int newWidth {};
+        int newHeight {};
+
         while(true) {
             bool isCopyFound = false;
             int img = imageRange(ranNumGen);
@@ -129,10 +140,10 @@ void GameController::process(int flag) {
                 }
             }
             if (!isCopyFound) {
-
-                imageSurface = SDL_LoadBMP(curImage.c_str());
-                std::cout << curImage << std::endl;
-                std::cout << "Loading the image now" << std::endl;
+                pair<int, int> newCoords = processImage(curImage);
+                newWidth = newCoords.first;
+                newHeight = newCoords.second;
+                imageSurface = SDL_LoadBMP("../imageChanged/currentImage.bmp");
                 if (imageSurface == nullptr) {
                     std::cout << "SDL could not load image: " << SDL_GetError() << std::endl;
                 }
@@ -143,7 +154,7 @@ void GameController::process(int flag) {
 
         window = SDL_CreateWindow("Spot the Difference",
                                   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                  width, height, SDL_WINDOW_ALLOW_HIGHDPI);
+                                  newWidth, newHeight, SDL_WINDOW_ALLOW_HIGHDPI);
         if (window == nullptr) {
             std::cerr << "Could not create window: " << SDL_GetError() << std::endl;
         }
@@ -156,9 +167,7 @@ void GameController::process(int flag) {
         imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
         SDL_FreeSurface(imageSurface);
 
-        // put code here for reading image and changing width and height of window
-
-//        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     }
 }
 
@@ -182,7 +191,7 @@ void GameController::run() {
                     process(1);
                     currentStage = GameStage::Stage1;
                 } else if (currentStage == GameStage::Stage1) {
-                    if (isButtonClicked(event, buttonRect)) {
+                    if (isButtonClicked(event, imageButton)) {
                         process(2);
                         currentStage = GameStage::Stage2;
                     } else {
@@ -190,7 +199,7 @@ void GameController::run() {
                         currentStage = GameStage::LoseScreen;
                     }
                 } else if (currentStage == GameStage::Stage2) {
-                    if (isButtonClicked(event, buttonRect)) {
+                    if (isButtonClicked(event, imageButton)) {
                         process(3);
                         currentStage = GameStage::Stage3;
                     } else {
@@ -198,7 +207,7 @@ void GameController::run() {
                         currentStage = GameStage::LoseScreen;
                     }
                 } else if (currentStage == GameStage::Stage3) {
-                    if (isButtonClicked(event, buttonRect)) {
+                    if (isButtonClicked(event, imageButton)) {
                         process(-1);
                         currentStage = GameStage::WinScreen;
                     } else {
@@ -223,15 +232,15 @@ void GameController::run() {
         } else if (currentStage == GameStage::Stage1) {
             SDL_RenderCopy(renderer, imageTexture, nullptr, nullptr);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-            SDL_RenderFillRect(renderer, &buttonRect);
+            SDL_RenderFillRect(renderer, &imageButton);
         } else if (currentStage == GameStage::Stage2) {
             SDL_RenderCopy(renderer, imageTexture, nullptr, nullptr);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-            SDL_RenderFillRect(renderer, &buttonRect);
+            SDL_RenderFillRect(renderer, &imageButton);
         } else if (currentStage == GameStage::Stage3) {
             SDL_RenderCopy(renderer, imageTexture, nullptr, nullptr);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-            SDL_RenderFillRect(renderer, &buttonRect);
+            SDL_RenderFillRect(renderer, &imageButton);
         } else if (currentStage == GameStage::LoseScreen) {
             SDL_SetRenderDrawColor(renderer, 150, 0, 0, 255);
             SDL_RenderFillRect(renderer, &buttonRect);
