@@ -4,8 +4,6 @@
 #include <filesystem>
 #include <vector>
 #include <random>
-#include "SDL.h"
-#include "SDL_ttf.h"
 #include "lib/include/imageClass.h"
 #include "lib/include/GameController.h"
 
@@ -31,8 +29,6 @@ int main() {
            imageList.push_back(filePath);
         }
     }
-
-
 
     GameController guessController(imageList);
     guessController.process(0);

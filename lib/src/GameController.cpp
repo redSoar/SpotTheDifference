@@ -275,7 +275,7 @@ void GameController::run() {
         // Update the screen
         SDL_RenderPresent(renderer);
     }
-
+    
     SDL_DestroyTexture(imageTexture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

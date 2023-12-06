@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// constructor
 Image::Image(const char* filename) {
     if(read(filename)) {
         //works
@@ -21,12 +22,14 @@ Image::Image(const char* filename) {
     }
 }
 
+// secondary constructor
 Image::Image(int x, int y, int n) : x(x), y(y), n(n) {
     this->size = x * y * n;
     this->data = CImg<unsigned char> (x, y, 1, n);
     this->pixelArray = nullptr;
 }
 
+// copy constructor
 Image::Image(const Image &copyImage) : Image(copyImage.x, copyImage.y, copyImage.n) {
     this->size = copyImage.size;
     this->data = copyImage.data;
@@ -39,6 +42,7 @@ Image::Image(const Image &copyImage) : Image(copyImage.x, copyImage.y, copyImage
     }
 }
 
+// copy assignment operator
 Image& Image::operator=(const Image & arg) {
     if (this != &arg) {
         this->size = arg.size;
@@ -53,7 +57,7 @@ Image& Image::operator=(const Image & arg) {
     return *this;
 }
 
-
+// destructor
 Image::~Image() {
     //deallocate
     for (int i = 0; i < y; i++) {
@@ -62,6 +66,7 @@ Image::~Image() {
     delete[] pixelArray;
 }
 
+// creates a 2d array of pixels
 void Image::makePixelArray() {
     int numRows = y;
     int numCols = x;
@@ -71,6 +76,7 @@ void Image::makePixelArray() {
     }
 }
 
+// fills the 2d array with the image data
 void Image::fillPixelArray() {
     for (int d = 0; d < size; d++) {
         for (int i = 0; i < y; i++) {
@@ -103,6 +109,7 @@ void Image::fillPixelArray() {
     }
 }
 
+// reads the given file
 bool Image::read(const char *filename) {
     data.load(filename);
     if (data.width() % 3 == 0 && data.height() % 3 == 0) {
@@ -117,6 +124,7 @@ bool Image::read(const char *filename) {
     return !data.is_empty();
 }
 
+// converts the 2d pixel array into a 1d array
 unsigned char *Image::convert2Dto1D(Pixel **pixelArray) {
     size = x * y * n;
     data = CImg<unsigned char>(x, y, 1, n);
@@ -147,6 +155,7 @@ unsigned char *Image::convert2Dto1D(Pixel **pixelArray) {
     return data;
 }
 
+// resizes the image
 void Image::resizeImage(int resizeX, int resizeY, int startX, int startY) {
     int newX = resizeX;
     int newY = resizeY;
@@ -157,6 +166,7 @@ void Image::resizeImage(int resizeX, int resizeY, int startX, int startY) {
     size = y * x * n;
 }
 
+// crops the image
 void Image::cropImage(int resizeX, int resizeY, int startX, int startY) {
     if (resizeX > x || resizeY > y) {
         cout << "Cannot crop to a size larger than the original image." << endl;
@@ -180,6 +190,7 @@ void Image::cropImage(int resizeX, int resizeY, int startX, int startY) {
     deconstructArray(tempArray);
 }
 
+// alters the image with the changed section
 void Image::replace(int xCoord, int yCoord, const Image& mosaicSectionSample) {
     for (int i = yCoord; i < yCoord + mosaicSectionSample.y; i++) {
         for (int j = xCoord; j < xCoord + mosaicSectionSample.x; j++) {
@@ -190,12 +201,14 @@ void Image::replace(int xCoord, int yCoord, const Image& mosaicSectionSample) {
     }
 }
 
+// writes the image to a file
 void Image::write(const char *filename) {
     outputFileName = filename;
     this->data = CImg<unsigned char>(convert2Dto1D(pixelArray), x, y, 1, n);
     data.save(filename);
 }
 
+// combines all 9 sections of the image together
 void Image::combine(Image& sampleImage, vector<Image>& sectionImages) {
     int sectionNumber = 0;
     while (!(sectionNumber >= 9)) {
@@ -214,6 +227,7 @@ void Image::combine(Image& sampleImage, vector<Image>& sectionImages) {
     }
 }
 
+// vertically flips the section
 void Image::flipImageVertically() {
     //make temp array and switch y values, [0][0] == [y][0]
     Pixel** tempArray;
@@ -232,6 +246,7 @@ void Image::flipImageVertically() {
     deconstructArray(tempArray);
 }
 
+// horizontally flips the section
 void Image::flipImageHorizontally() {
     //make temp array and switch x values, [0][0] == [0][x]
     Pixel** tempArray;
@@ -250,7 +265,7 @@ void Image::flipImageHorizontally() {
     deconstructArray(tempArray);
 }
 
-//new function
+// changes a random RGB value of this section
 void Image::changeColorValue(mt19937 &randomNumberGenerator) {
     std::uniform_int_distribution<> colorValue(0, 255);
     std::uniform_int_distribution<> RGB(0, 2);
@@ -291,6 +306,7 @@ void Image::changeColorValue(mt19937 &randomNumberGenerator) {
     deconstructArray(tempArray);
 }
 
+// gives this section a border
 void Image::makeBorder(int thickness, Pixel borderColor) {
     if (thickness < 0) {
         cout << "You gave a negative numbers so I'm just going to make it the absolute value" << endl;
@@ -320,6 +336,7 @@ void Image::makeBorder(int thickness, Pixel borderColor) {
     deconstructArray(tempArray);
 }
 
+// makes a border pixel
 Pixel Image::addBorderPixel(Pixel pixel, Pixel borderColor) {
     pixel.setRed(borderColor.getRed());
     pixel.setGreen(borderColor.getGreen());
@@ -328,7 +345,7 @@ Pixel Image::addBorderPixel(Pixel pixel, Pixel borderColor) {
     return pixel;
 }
 
-//hard
+// pointillises the section
 void Image::createPointillism() {
     Pixel** tempArray;
     int numIterations = (x + y) * 10; // Changes number of circles for images (based on image size)
@@ -368,6 +385,7 @@ Pixel** Image::copyPixelArray(Pixel** source, int numRows, int numCols) {
     return copy;
 }
 
+// creates a temporary array for the section mutations
 Pixel **Image::makeTempArray(Pixel** tempArray ,int numRows, int numCols) {
     tempArray = new Pixel* [numRows] {};
     for (int i = 0; i < numRows; i++) {
@@ -376,6 +394,7 @@ Pixel **Image::makeTempArray(Pixel** tempArray ,int numRows, int numCols) {
     return tempArray;
 }
 
+// sets the minimum radius for the pointillism
 int Image::makeMinRadius(int x, int y) {
     int minRadius;
     if (x > y) {
@@ -387,6 +406,7 @@ int Image::makeMinRadius(int x, int y) {
     return minRadius;
 }
 
+// sets the maximum radius for the pointillism
 int Image::makeMaxRadius(int x, int y) {
     int maxRadius;
     if (x > y) {
@@ -398,6 +418,7 @@ int Image::makeMaxRadius(int x, int y) {
     return maxRadius;
 }
 
+// destroys the temporary array
 void Image::deconstructArray(Pixel **array) {
     for (int i = 0; i < y; i++) {
         delete[] array[i];
@@ -405,6 +426,7 @@ void Image::deconstructArray(Pixel **array) {
     delete[] array;
 }
 
+// gets the width of a single section
 int Image::getXSectionSize(int numberOfSections) {
     if (x % numberOfSections != 0) {
         return x - x % numberOfSections / numberOfSections;
@@ -413,6 +435,7 @@ int Image::getXSectionSize(int numberOfSections) {
     }
 }
 
+// gets the height of a single section
 int Image::getYSectionSize(int numberOfSections) {
     if (y % numberOfSections != 0) {
         return y - y % numberOfSections / numberOfSections;

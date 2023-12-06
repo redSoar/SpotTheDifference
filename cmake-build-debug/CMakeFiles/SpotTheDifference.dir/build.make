@@ -140,10 +140,6 @@ SpotTheDifference: CMakeFiles/SpotTheDifference.dir/lib/src/imageClass.cpp.o
 SpotTheDifference: CMakeFiles/SpotTheDifference.dir/lib/src/pixelClass.cpp.o
 SpotTheDifference: CMakeFiles/SpotTheDifference.dir/lib/src/GameController.cpp.o
 SpotTheDifference: CMakeFiles/SpotTheDifference.dir/build.make
-SpotTheDifference: /usr/lib/x86_64-linux-gnu/libSDL_image.so
-SpotTheDifference: /usr/lib/x86_64-linux-gnu/libSDL_ttf.so
-SpotTheDifference: /usr/lib/x86_64-linux-gnu/libSDL_image.so
-SpotTheDifference: /usr/lib/x86_64-linux-gnu/libSDL_ttf.so
 SpotTheDifference: CMakeFiles/SpotTheDifference.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable SpotTheDifference"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SpotTheDifference.dir/link.txt --verbose=$(VERBOSE)

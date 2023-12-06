@@ -5,6 +5,7 @@
 #ifndef SPOTTHEDIFFERENCE_GAMESTAGE_H
 #define SPOTTHEDIFFERENCE_GAMESTAGE_H
 
+// represents the stages of the game
 enum class GameStage {
     MainMenu,
     Stage1,
