@@ -7,7 +7,6 @@
 
 enum class GameStage {
     MainMenu,
-    Instructions,
     Stage1,
     Stage2,
     Stage3,

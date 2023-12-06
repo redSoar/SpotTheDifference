@@ -7,11 +7,13 @@
 #include "../include/imageClass.h"
 #include "../include/GameController.h"
 
+// constructor
 GameController::GameController(vector<string> &newList) {
     listOfImages = newList;
     currentStage = GameStage::MainMenu;
 }
 
+// does a random effect to a random section of the image
 void GameController::randomEffectToOccur(Image& sectionImage, mt19937& randomNumberGenerator) {
     std::uniform_int_distribution<> effect(0, 4);
     int editType = effect(randomNumberGenerator);
@@ -25,9 +27,8 @@ void GameController::randomEffectToOccur(Image& sectionImage, mt19937& randomNum
         sectionImage.changeColorValue(randomNumberGenerator);
     }
     else if (editType == 3) {
-        std::uniform_int_distribution<> thicknessValue(1, 5);
         std::uniform_int_distribution<> colorValue(0, 255);
-        int thickness = thicknessValue(randomNumberGenerator);
+        int thickness = 1;
         int redValue = colorValue(randomNumberGenerator);
         int greenValue = colorValue(randomNumberGenerator);
         int blueValue = colorValue(randomNumberGenerator);
@@ -42,6 +43,7 @@ void GameController::randomEffectToOccur(Image& sectionImage, mt19937& randomNum
     }
 }
 
+// reads the image, edits it, writes it, and returns the image dimensions
 pair<int, int> GameController::processImage(const string& fileName) {
     random_device rd;
     mt19937 randomNumberGenerator(rd());
@@ -72,6 +74,7 @@ pair<int, int> GameController::processImage(const string& fileName) {
     return newDimensions;
 }
 
+// was the button clicked?
 bool GameController::isButtonClicked(SDL_Event &curEvent, SDL_Rect &curButton) {
     int x, y;
     SDL_GetMouseState(&x, &y);
@@ -81,11 +84,20 @@ bool GameController::isButtonClicked(SDL_Event &curEvent, SDL_Rect &curButton) {
            curEvent.type == SDL_MOUSEBUTTONDOWN && curEvent.button.button == SDL_BUTTON_LEFT;
 }
 
+// sets up the window, renderer, and more so that the game can be visible
 void GameController::process(int flag) {
+
+    // preprocessing (initial setup)
     if (flag == 0) {
+        std::cout << "Welcome to Spot the Difference!" << std::endl;
+        std::cout << "How to play:\n - An image will be shown. One section will not fit in with the rest.\n"
+                     " - Select the odd section out. You may need to click twice. Get it wrong and you lose!\n"
+                     " - Press the blue button to start." << std::endl;
+
         width = 800;
         height = 600;
 
+        // window - actual application window
         window = SDL_CreateWindow("Spot the Difference",
                                   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                   width, height, SDL_WINDOW_ALLOW_HIGHDPI);
@@ -93,17 +105,26 @@ void GameController::process(int flag) {
             std::cerr << "Could not create window: " << SDL_GetError() << std::endl;
         }
 
+        // renders objects, images, color, etc..
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
         if (renderer == nullptr) {
             std::cerr << "Could not create renderer: " << SDL_GetError() << std::endl;
         }
 
-        buttonRect = {350, 250, 100, 100};
-    } else if (flag == -1) {
+        // button
+        buttonRect = {250, 250, 300, 100};
+    } else if (flag == -1 || flag == -2) {       // Sets up final screen (win or lose)
+        // free memory before reassigning
         SDL_DestroyTexture(imageTexture);
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
 
+        if (flag == -1) {
+            std::cout << "You Win!!!!!! Press the green button to exit!" << std::endl;
+        } else {
+            std::cout << "You lose......... Press the red button to exit...." << std::endl;
+        }
+
         width = 800;
         height = 600;
 
@@ -118,7 +139,8 @@ void GameController::process(int flag) {
         if (renderer == nullptr) {
             std::cerr << "Could not create renderer: " << SDL_GetError() << std::endl;
         }
-    } else {
+
+    } else {                                    // all other scenes (image scenes)
         SDL_DestroyTexture(imageTexture);
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
@@ -130,6 +152,7 @@ void GameController::process(int flag) {
         int newWidth {};
         int newHeight {};
 
+        // finds a new unused image
         while(true) {
             bool isCopyFound = false;
             int img = imageRange(ranNumGen);
@@ -171,9 +194,10 @@ void GameController::process(int flag) {
     }
 }
 
+// runs the game
 void GameController::run() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        std::cout << "SDL could not initialize! SDL Error: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL could not initialize! SDL Error: " << SDL_GetError() << std::endl;
     }
 
     while (true) {
@@ -182,20 +206,18 @@ void GameController::run() {
                 break;
             }
 
+            // changes the scene based on where the mouse clicked
             if (SDL_MOUSEBUTTONDOWN == event.type) {
                 if (currentStage == GameStage::MainMenu && isButtonClicked(event, buttonRect)) {
                     process(1);
                     currentStage = GameStage::Stage1;
 //                    currentStage = GameStage::Instructions;
-                } else if (currentStage == GameStage::Instructions && isButtonClicked(event, buttonRect)) {
-                    process(1);
-                    currentStage = GameStage::Stage1;
                 } else if (currentStage == GameStage::Stage1) {
                     if (isButtonClicked(event, imageButton)) {
                         process(2);
                         currentStage = GameStage::Stage2;
                     } else {
-                        process(-1);
+                        process(-2);
                         currentStage = GameStage::LoseScreen;
                     }
                 } else if (currentStage == GameStage::Stage2) {
@@ -203,7 +225,7 @@ void GameController::run() {
                         process(3);
                         currentStage = GameStage::Stage3;
                     } else {
-                        process(-1);
+                        process(-2);
                         currentStage = GameStage::LoseScreen;
                     }
                 } else if (currentStage == GameStage::Stage3) {
@@ -211,8 +233,12 @@ void GameController::run() {
                         process(-1);
                         currentStage = GameStage::WinScreen;
                     } else {
-                        process(-1);
+                        process(-2);
                         currentStage = GameStage::LoseScreen;
+                    }
+                } else if (currentStage == GameStage::LoseScreen || currentStage == GameStage::WinScreen) {
+                    if (isButtonClicked(event, buttonRect)) {
+                        break;
                     }
                 }
             }
@@ -224,9 +250,6 @@ void GameController::run() {
 
         // Draw the button
         if (currentStage == GameStage::MainMenu) {
-            SDL_SetRenderDrawColor(renderer, 0, 0, 150, 255);
-            SDL_RenderFillRect(renderer, &buttonRect);
-        } else if (currentStage == GameStage::Instructions) {
             SDL_SetRenderDrawColor(renderer, 0, 0, 150, 255);
             SDL_RenderFillRect(renderer, &buttonRect);
         } else if (currentStage == GameStage::Stage1) {

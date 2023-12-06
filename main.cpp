@@ -4,12 +4,15 @@
 #include <filesystem>
 #include <vector>
 #include <random>
+#include "SDL.h"
+#include "SDL_ttf.h"
 #include "lib/include/imageClass.h"
 #include "lib/include/GameController.h"
 
 namespace fs = std::filesystem;
 using namespace std;
 
+// gets all image files and starts the game
 int main() {
     vector<string> imageList {};
 
@@ -28,6 +31,8 @@ int main() {
            imageList.push_back(filePath);
         }
     }
+
+
 
     GameController guessController(imageList);
     guessController.process(0);

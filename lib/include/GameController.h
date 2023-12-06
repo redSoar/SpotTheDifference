@@ -8,6 +8,7 @@
 #include <random>
 #include <vector>
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "GameStage.h"
 using namespace std;
 
@@ -29,6 +30,7 @@ public:
     explicit GameController(vector<string>& newList);
     void randomEffectToOccur(Image& sectionImage, mt19937& randomNumberGenerator);
     pair<int, int> processImage(const string& fileName);
+//    void renderText(SDL_Renderer* rend, const string& text, int x, int y, TTF_Font* ft, SDL_Color color);
     bool isButtonClicked(SDL_Event& curEvent, SDL_Rect& curButton);
     void process(int flag);
     void run();
