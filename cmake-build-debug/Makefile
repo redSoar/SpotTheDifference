@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/ninte/CLionProjects/SpotTheDifference
+CMAKE_SOURCE_DIR = /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug
+CMAKE_BINARY_DIR = /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/ninte/CLionProjects/SpotTheDifference/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Hyper/OneDrive/Documents/GitHub/SpotTheDifference/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,30 @@ SpotTheDifference: cmake_check_build_system
 SpotTheDifference/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/build
 .PHONY : SpotTheDifference/fast
+
+lib/src/GameController.o: lib/src/GameController.cpp.o
+.PHONY : lib/src/GameController.o
+
+# target to build an object file
+lib/src/GameController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/GameController.cpp.o
+.PHONY : lib/src/GameController.cpp.o
+
+lib/src/GameController.i: lib/src/GameController.cpp.i
+.PHONY : lib/src/GameController.i
+
+# target to preprocess a source file
+lib/src/GameController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/GameController.cpp.i
+.PHONY : lib/src/GameController.cpp.i
+
+lib/src/GameController.s: lib/src/GameController.cpp.s
+.PHONY : lib/src/GameController.s
+
+# target to generate assembly for a file
+lib/src/GameController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SpotTheDifference.dir/build.make CMakeFiles/SpotTheDifference.dir/lib/src/GameController.cpp.s
+.PHONY : lib/src/GameController.cpp.s
 
 lib/src/imageClass.o: lib/src/imageClass.cpp.o
 .PHONY : lib/src/imageClass.o
@@ -210,6 +234,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SpotTheDifference"
+	@echo "... lib/src/GameController.o"
+	@echo "... lib/src/GameController.i"
+	@echo "... lib/src/GameController.s"
 	@echo "... lib/src/imageClass.o"
 	@echo "... lib/src/imageClass.i"
 	@echo "... lib/src/imageClass.s"

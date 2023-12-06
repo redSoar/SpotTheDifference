@@ -14,7 +14,12 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL_IMAGE_INCLUDE_DIRS} ${SDL_TTF_INC
 
 add_executable(SpotTheDifference main.cpp
         lib/src/imageClass.cpp
-        lib/src/pixelClass.cpp)
+        lib/include/imageClass.h
+        lib/src/pixelClass.cpp
+        lib/include/pixelClass.h
+        lib/src/GameController.cpp
+        lib/include/GameController.h
+        lib/include/GameStage.h)
 
 # Link against the required libraries
 target_link_libraries(SpotTheDifference m pthread X11)
