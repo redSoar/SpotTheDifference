@@ -4,11 +4,64 @@
 
 #include <iostream>
 #include <random>
+#include "../include/imageClass.h"
 #include "../include/GameController.h"
 
-GameController::GameController(vector<const char*> &newList) {
+GameController::GameController(vector<string> &newList) {
     listOfImages = newList;
     currentStage = GameStage::MainMenu;
+}
+
+void GameController::randomEffectToOccur(Image& sectionImage, mt19937& randomNumberGenerator) {
+    std::uniform_int_distribution<> effect(0, 4);
+    int editType = effect(randomNumberGenerator);
+    if (editType == 0) {
+        sectionImage.flipImageVertically();
+    }
+    else if (editType == 1) {
+        sectionImage.flipImageHorizontally();
+    }
+    else if (editType == 2) {
+        sectionImage.changeColorValue(randomNumberGenerator);
+    }
+    else if (editType == 3) {
+        std::uniform_int_distribution<> thicknessValue(0, 100);
+        std::uniform_int_distribution<> colorValue(0, 255);
+        int thickness = thicknessValue(randomNumberGenerator);
+        int redValue = colorValue(randomNumberGenerator);
+        int greenValue = colorValue(randomNumberGenerator);
+        int blueValue = colorValue(randomNumberGenerator);
+        Pixel borderPixel;
+        borderPixel.setRed(redValue);
+        borderPixel.setGreen(greenValue);
+        borderPixel.setBlue(blueValue);
+        sectionImage.makeBorder(thickness, borderPixel);
+    }
+    else {
+        sectionImage.createPointillism();
+    }
+}
+
+void GameController::processImage(const string& fileName) {
+    random_device rd;
+    mt19937 randomNumberGenerator(rd());
+
+    Image test(fileName.c_str());
+    vector<Image> sampleSections;
+    for (int i = 0; i < 9; i++) {
+        Image sampleImage(fileName.c_str());
+        int startX = sampleImage.getXSectionSize(3) * (i % 3);
+        int startY = sampleImage.getYSectionSize(3) * (i / 3);
+        sampleImage.resizeImage(sampleImage.getXSectionSize(3), sampleImage.getYSectionSize(3), startX, startY);
+        sampleSections.push_back(sampleImage);
+    }
+    std::uniform_int_distribution<> section(0, 8);
+    int sectionNumber = section(randomNumberGenerator);
+    randomEffectToOccur(sampleSections[sectionNumber], randomNumberGenerator);
+    test.makePixelArray();
+    test.fillPixelArray();
+    test.combine(test, sampleSections);
+    test.write("../imageChanged/currentImage.bmp");
 }
 
 bool GameController::isButtonClicked(SDL_Event &curEvent, SDL_Rect &curButton) {
@@ -36,7 +89,6 @@ void GameController::process(int flag) {
         if (renderer == nullptr) {
             std::cerr << "Could not create renderer: " << SDL_GetError() << std::endl;
         }
-        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
         buttonRect = {100, 100, 350, 250};
     } else if (flag == -1) {
@@ -70,14 +122,17 @@ void GameController::process(int flag) {
         while(true) {
             bool isCopyFound = false;
             int img = imageRange(ranNumGen);
-            const char* curImage = listOfImages[img];
+            string curImage = listOfImages[img];
             for (int i = 0; i < usedImages.size(); i++) {
                 if (curImage == usedImages[i]) {
                     isCopyFound = true;
                 }
             }
             if (!isCopyFound) {
-                imageSurface = SDL_LoadBMP(curImage);
+
+                imageSurface = SDL_LoadBMP(curImage.c_str());
+                std::cout << curImage << std::endl;
+                std::cout << "Loading the image now" << std::endl;
                 if (imageSurface == nullptr) {
                     std::cout << "SDL could not load image: " << SDL_GetError() << std::endl;
                 }
@@ -85,11 +140,6 @@ void GameController::process(int flag) {
                 break;
             }
         }
-
-        imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
-        SDL_FreeSurface(imageSurface);
-
-        // put code here for reading image and changing width and height of window
 
         window = SDL_CreateWindow("Spot the Difference",
                                   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -102,6 +152,13 @@ void GameController::process(int flag) {
         if (renderer == nullptr) {
             std::cerr << "Could not create renderer: " << SDL_GetError() << std::endl;
         }
+
+        imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+        SDL_FreeSurface(imageSurface);
+
+        // put code here for reading image and changing width and height of window
+
+//        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     }
 }
 
@@ -126,7 +183,7 @@ void GameController::run() {
                     currentStage = GameStage::Stage1;
                 } else if (currentStage == GameStage::Stage1) {
                     if (isButtonClicked(event, buttonRect)) {
-                        process(1);
+                        process(2);
                         currentStage = GameStage::Stage2;
                     } else {
                         process(-1);
@@ -134,7 +191,7 @@ void GameController::run() {
                     }
                 } else if (currentStage == GameStage::Stage2) {
                     if (isButtonClicked(event, buttonRect)) {
-                        process(1);
+                        process(3);
                         currentStage = GameStage::Stage3;
                     } else {
                         process(-1);

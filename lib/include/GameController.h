@@ -13,8 +13,8 @@ using namespace std;
 
 class GameController {
 private:
-    vector<const char*> listOfImages;
-    vector<const char*> usedImages {};
+    vector<string> listOfImages;
+    vector<string> usedImages {};
     int width {};
     int height {};
     SDL_Window *window {};
@@ -25,7 +25,9 @@ private:
     SDL_Texture *imageTexture {};
     SDL_Event event {};
 public:
-    explicit GameController(vector<const char*>& newList);
+    explicit GameController(vector<string>& newList);
+    void randomEffectToOccur(Image& sectionImage, mt19937& randomNumberGenerator);
+    void processImage(const string& fileName);
     bool isButtonClicked(SDL_Event& curEvent, SDL_Rect& curButton);
     void process(int flag);
     void run();
